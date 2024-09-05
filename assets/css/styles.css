@@ -1,5 +1,6 @@
 /* Archivo: styles.css */
 
+/* Estilo global del cuerpo */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -106,4 +107,73 @@ footer {
     text-align: center;
     padding: 10px 0;
     margin-top: 40px;
+}
+
+/* Estilos para las tarjetas de post */
+.post-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box; /* Asegura que padding y border no aumenten el tamaño */
+    flex: 1 1 calc(33.333% - 40px); /* 3 tarjetas por fila para pantallas grandes */
+}
+
+/* Estilo de las imágenes en la tarjeta */
+.post-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Estilo del título de la tarjeta */
+.post-card h3 {
+    margin-top: 0;
+    color: #1a1a40;
+}
+
+/* Estilo del contenido del texto en la tarjeta */
+.post-card p {
+    color: #3a3a80;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+/* Estilo del enlace en la tarjeta */
+.post-card a {
+    text-align: right;
+    color: #3a3a80;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.post-card a:hover {
+    color: #6a6ab0;
+    text-decoration: underline;
+}
+
+/* Estilos para el contenedor de las tarjetas */
+#blog-posts {
+    display: flex;
+    flex-wrap: wrap; /* Para que las tarjetas se acomoden en líneas si no caben */
+    justify-content: space-between;
+}
+
+/* Media queries para pantallas más pequeñas */
+@media (max-width: 1024px) {
+    .post-card {
+        flex: 1 1 calc(50% - 40px); /* 2 tarjetas por fila para pantallas medianas */
+    }
+}
+
+@media (max-width: 768px) {
+    .post-card {
+        flex: 1 1 100%; /* 1 tarjeta por fila para pantallas pequeñas o móviles */
+    }
 }
