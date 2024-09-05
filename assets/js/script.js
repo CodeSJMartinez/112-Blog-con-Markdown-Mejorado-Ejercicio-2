@@ -1,16 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Array que contiene la lista de posts (en producción podrías generar este array dinámicamente)
     const posts = [
-        { title: "Primer Post", file: "blog/post1.md", img: "blog/img/post1.jpg" },
-        { title: "Segundo Post", file: "blog/post2.md", img: "blog/img/post2.jpg" },
-        { title: "Tercer Post", file: "blog/post3.md", img: "blog/img/post3.jpg" },
-        { title: "Cuarto Post", file: "blog/post4.md", img: "blog/img/post4.jpg" },
-        { title: "Quinto Post", file: "blog/post5.md", img: "blog/img/post5.jpg" },
-        { title: "Sexto Post", file: "blog/post6.md", img: "blog/img/post6.jpg" }
+        { file: "blog/post1.md", img: "blog/img/post1.jpg" },
+        { file: "blog/post2.md", img: "blog/img/post2.jpg" },
+        { file: "blog/post3.md", img: "blog/img/post3.jpg" },
+        { file: "blog/post4.md", img: "blog/img/post4.jpg" },
+        { file: "blog/post5.md", img: "blog/img/post5.jpg" },
+        { file: "blog/post6.md", img: "blog/img/post6.jpg" },
+        // Agrega más posts aquí si lo necesitas
     ];
 
     const blogContainer = document.getElementById('blog-posts');
 
-    posts.slice(0, 6).forEach(post => {
+    // Función para procesar y renderizar cada post
+    function renderPost(post) {
         const postElement = document.createElement('div');
         postElement.className = 'post-card';
 
@@ -22,12 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 imgElement.src = post.img;
             })
             .catch(() => {
-                imgElement.src = 'blog/img/default.jpg'; // Imagen genérica
+                imgElement.src = 'blog/img/default.jpg'; // Imagen genérica si no existe la imagen
             });
 
-        const postTitle = document.createElement('h3');
-        postTitle.textContent = post.title;
-
+        const postTitle = document.createElement('h3'); // Será reemplazado por el título real del Markdown
         const postExcerpt = document.createElement('p');
         const postLink = document.createElement('a');
         postLink.textContent = "Ver Más >";
@@ -39,11 +40,15 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(mdContent => {
                 const htmlContent = marked.parse(mdContent);
 
-                // Obtener el primer párrafo después del título
+                // Obtener el título (primer h1) del Markdown
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = htmlContent;
+                const h1Title = tempDiv.querySelector('h1');
+                postTitle.textContent = h1Title ? h1Title.textContent : 'Sin título'; // Título del post
+
+                // Obtener el primer párrafo después del título
                 const firstParagraph = tempDiv.querySelector('p');
-                postExcerpt.textContent = firstParagraph ? firstParagraph.textContent : '';
+                postExcerpt.textContent = firstParagraph ? firstParagraph.textContent : 'Sin descripción disponible';
             });
 
         postElement.appendChild(imgElement);
@@ -52,5 +57,10 @@ document.addEventListener("DOMContentLoaded", function () {
         postElement.appendChild(postLink);
 
         blogContainer.appendChild(postElement);
+    }
+
+    // Iterar sobre los posts existentes
+    posts.forEach(post => {
+        renderPost(post);
     });
 });
