@@ -1,3 +1,9 @@
+---
+date: 2024-09-01
+category: "Desarrollo Web"
+title: "Primer Post ***"
+---
+
 # Estilos Flexbox para agrupar tarjetas
 
 Para agrupar las tarjetas de tres en tres en pantallas de escritorio, dos en pantallas más pequeñas y una sola tarjeta en dispositivos móviles, podemos utilizar **CSS Flexbox** y **media queries** para adaptar el diseño a diferentes tamaños de pantalla. Vamos a hacer los ajustes necesarios en el archivo `styles.css`.
