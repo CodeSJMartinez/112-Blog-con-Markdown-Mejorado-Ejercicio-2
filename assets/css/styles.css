@@ -167,6 +167,14 @@ footer {
     text-decoration: underline;
 }
 
+
+.post-card .blog-code {
+    font-size: 0.8rem; /* Texto pequeño */
+    color: #666; /* Gris claro */
+    margin-top: 0.1rem; /* Espacio superior */
+    text-align: left; /* Centrar el texto */
+}
+
 /* Estilos para el contenedor de las tarjetas */
 #blog-posts {
     display: flex;
@@ -186,3 +194,4 @@ footer {
         flex: 1 1 100%; /* 1 tarjeta por fila para pantallas pequeñas o móviles */
     }
 }
+

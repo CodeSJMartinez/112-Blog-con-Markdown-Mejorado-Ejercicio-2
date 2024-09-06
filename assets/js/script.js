@@ -1,68 +1,65 @@
 document.addEventListener("DOMContentLoaded", async function () {
-    const posts = [
-        { file: "blog/post1.md", img: "blog/img/post1.jpg" },
-        { file: "blog/post2.md", img: "blog/img/post2.jpg" },
-        { file: "blog/post3.md", img: "blog/img/post3.jpg" },
-        { file: "blog/post4.md", img: "blog/img/post4.jpg" },
-        { file: "blog/post5.md", img: "blog/img/post5.jpg" },
-        { file: "blog/post6.md", img: "blog/img/post6.jpg" },
-        { file: "blog/post7.md", img: "blog/img/post7.jpg" },
-        { file: "blog/post8.md", img: "blog/img/post8.jpg" },
-    ];
-
     const blogContainer = document.getElementById('blog-posts');
 
-    async function renderPost(post) {
+    // Cargar el JSON
+    let jsonData;
+    try {
+        const response = await fetch('blog/json/posts.json');
+        if (!response.ok) throw new Error('No se pudo cargar el archivo JSON');
+        jsonData = await response.json();
+        console.log('Datos JSON cargados:', jsonData);
+    } catch (error) {
+        console.error('Error al cargar el archivo JSON:', error);
+    }
+
+    function createPostCard(postJson) {
         const postElement = document.createElement('div');
         postElement.className = 'post-card';
+        postElement.dataset.blogCode = postJson.blog_code; // Guardar el código del blog para usarlo más tarde
 
         // Crear el elemento de imagen
         const imgElement = document.createElement('img');
-        imgElement.src = post.img;
+        imgElement.src = `blog/img/${postJson.blog_code.split('/').pop().replace('.md', '.jpg')}`;
         imgElement.onerror = () => {
             imgElement.src = 'blog/img/default.jpg'; // Imagen genérica si falla la carga
         };
 
         const postTitle = document.createElement('h3');
+        postTitle.textContent = postJson.title || 'Título no disponible';
+
         const postExcerpt = document.createElement('p');
+        postExcerpt.textContent = postJson.intro || 'Descripción no proporcionada';
+
         const postLink = document.createElement('a');
         postLink.textContent = "Ver Más >";
-        postLink.href = `post.html?file=${post.file}`;  // Enlace a la página del post
+        postLink.href = `post.html?file=blog/${postJson.blog_code}`;
 
-        try {
-            const response = await fetch(post.file);
-            if (!response.ok) throw new Error('Error al cargar el post');
-            const mdContent = await response.text();
-            const htmlContent = marked.parse(mdContent);
-
-            // Extraer el título y el primer párrafo
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = htmlContent;
-            const h1Title = tempDiv.querySelector('h1');
-            const firstParagraph = tempDiv.querySelector('p');
-            
-            postTitle.textContent = h1Title ? h1Title.textContent : 'Título no disponible';
-            postExcerpt.textContent = firstParagraph ? firstParagraph.textContent : 'Descripción no proporcionada';
-        } catch (error) {
-            postTitle.textContent = 'Error al cargar el post';
-            postExcerpt.textContent = 'No se pudo cargar el contenido de este post.';
-        }
-
-        // Agregar el evento para que toda la tarjeta sea clicable
-        postElement.addEventListener('click', function (event) {
-            // Si el clic es en el enlace, no se redirige automáticamente
-            if (event.target.tagName !== 'A') {
-                window.location.href = postLink.href;
-            }
-        });
+        // Crear el div para mostrar el blog-code
+        const blogCodeElement = document.createElement('div');
+        blogCodeElement.className = 'blog-code';
+        blogCodeElement.textContent = `Ref: ${postJson.blog_code}`;
+        blogCodeElement.style.fontSize = '0.8rem'; // Texto pequeño
+        blogCodeElement.style.color = '#666'; // Color gris claro
 
         postElement.appendChild(imgElement);
         postElement.appendChild(postTitle);
         postElement.appendChild(postExcerpt);
         postElement.appendChild(postLink);
+        postElement.appendChild(blogCodeElement);
         blogContainer.appendChild(postElement);
     }
 
-    // Procesar los posts de forma asíncrona
-    await Promise.all(posts.map(renderPost));
+    // Crear tarjetas para cada post en el JSON
+    jsonData?.posts.forEach(post => {
+        createPostCard(post);
+    });
+
+    // Agregar eventos para redirigir al hacer clic en la tarjeta
+    blogContainer.addEventListener('click', function (event) {
+        const card = event.target.closest('.post-card');
+        if (card) {
+            const blogCode = card.dataset.blogCode;
+            window.location.href = `post.html?file=blog/${blogCode}`;
+        }
+    });
 });
