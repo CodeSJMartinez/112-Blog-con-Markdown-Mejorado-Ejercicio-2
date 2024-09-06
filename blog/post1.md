@@ -2,11 +2,11 @@
 
 Para agrupar las tarjetas de tres en tres en pantallas de escritorio, dos en pantallas más pequeñas y una sola tarjeta en dispositivos móviles, podemos utilizar **CSS Flexbox** y **media queries** para adaptar el diseño a diferentes tamaños de pantalla. Vamos a hacer los ajustes necesarios en el archivo `styles.css`.
 
-### Paso 1: Estilos Flexbox para agrupar tarjetas
+## Paso 1: Estilos Flexbox para agrupar tarjetas
 
 Modificaremos los estilos del contenedor que contiene las tarjetas para que se ajuste a un layout de columnas que varíe según el tamaño de la pantalla.
 
-#### Actualización en `styles.css`:
+### Actualización en `styles.css`:
 
 ```css
 /* Estilos para el contenedor de las tarjetas */
@@ -43,7 +43,7 @@ Modificaremos los estilos del contenedor que contiene las tarjetas para que se a
 }
 ```
 
-### Explicación de los estilos:
+## Explicación de los estilos:
 
 1. **Flexbox en el contenedor de las tarjetas (`#blog-posts`)**: Usamos `flex-wrap: wrap` para que las tarjetas se ajusten en filas. La propiedad `justify-content: space-between` asegura que haya espacio uniforme entre las tarjetas.
 
@@ -52,11 +52,11 @@ Modificaremos los estilos del contenedor que contiene las tarjetas para que se a
     - **Pantallas medianas**: Entre 768px y 1024px (tabletas o pantallas más pequeñas), ajustamos a `flex: 1 1 calc(50% - 40px)` para mostrar dos tarjetas por fila.
     - **Pantallas pequeñas (móviles)**: Para pantallas menores de 768px, las tarjetas ocuparán el 100% del ancho, con `flex: 1 1 100%`, mostrando una sola tarjeta por fila.
 
-### Paso 2: Revisar el HTML y JavaScript
+## Paso 2: Revisar el HTML y JavaScript
 
 El código HTML y JavaScript no necesita cambios, ya que el ajuste es únicamente de diseño. El contenedor `#blog-posts` y las tarjetas `.post-card` funcionarán automáticamente con los nuevos estilos CSS.
 
-### Resultado esperado:
+## Resultado esperado:
 
 - **En pantallas grandes (más de 1024px)**: Se mostrarán 3 tarjetas por fila.
 - **En pantallas medianas (entre 768px y 1024px)**: Se mostrarán 2 tarjetas por fila.
@@ -64,6 +64,6 @@ El código HTML y JavaScript no necesita cambios, ya que el ajuste es únicament
 
 Esto permitirá una experiencia de usuario responsiva y optimizada para cualquier tipo de dispositivo.
 
-### Conclusión
+## Conclusión
 
 Con estos cambios, el diseño se adaptará automáticamente a diferentes tamaños de pantalla, proporcionando una mejor visualización en dispositivos de escritorio, tabletas y móviles.

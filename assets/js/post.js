@@ -36,6 +36,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 const postContent = marked.parse(mdContent);
                 const contentElement = document.getElementById('post-content');
                 contentElement.innerHTML = postContent;
+
+                // Generar el índice de contenido basado en los H2
+                generateContentIndex();
             } else {
                 console.error('No se encontró el post en el JSON');
                 document.getElementById('post-title').textContent = 'Post no encontrado';
@@ -49,5 +52,24 @@ document.addEventListener("DOMContentLoaded", async function () {
     } else {
         document.getElementById('post-title').textContent = 'Archivo no especificado';
         document.getElementById('post-content').textContent = 'No se ha proporcionado un archivo para mostrar.';
+    }
+
+    // Función para generar el índice de contenido
+    function generateContentIndex() {
+        const contentElement = document.getElementById('post-content');
+        const headings = contentElement.querySelectorAll('h2');
+        const indexList = document.getElementById('index-list');
+        indexList.innerHTML = '';
+
+        headings.forEach((heading, index) => {
+            const id = `section-${index}`;
+            heading.id = id;  // Asigna un ID único a cada H2
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = `#${id}`;
+            link.textContent = heading.textContent;
+            listItem.appendChild(link);
+            indexList.appendChild(listItem);
+        });
     }
 });
