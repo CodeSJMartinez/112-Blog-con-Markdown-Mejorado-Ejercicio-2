@@ -175,6 +175,16 @@ footer {
     text-align: left; /* Centrar el texto */
 }
 
+#post-title {
+    background-color: #003366; /* Azul oscuro */
+    color: white;              /* Texto en blanco */
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
 /* Estilos para el contenedor de las tarjetas */
 #blog-posts {
     display: flex;
